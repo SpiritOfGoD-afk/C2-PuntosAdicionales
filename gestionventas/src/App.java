@@ -8,31 +8,41 @@ public class App {
         // Obtener todos los vendedores
         Vendedor[] vendedores = ParseDatos.parseDatos();
 
-        // Variables para almacenar el mayor total de ventas en diciembre
-        long mayorTotalVentasDiciembre = 0;
-
-        // Recorrer todos los vendedores
-        for (Vendedor vendedor : vendedores) {
-            long totalVentasDiciembre = 0;
-
-            // Recorrer las ventas del vendedor (hasta 50 ventas)
-            for (int i = 0; i < 50; i++) {
-                Venta venta = vendedor.getVenta(i);
-                if (venta != null) { // Verificar si la venta existe
-                    // Filtrar ventas de diciembre de cualquier año
-                    if (venta.getFechaVenta().getMonth() == Month.DECEMBER) {
-                        totalVentasDiciembre += venta.getValorVenta();
-                    }
-                }
-            }
-
-            // Verificar si este vendedor tiene el mayor total de ventas en diciembre
-            if (totalVentasDiciembre > mayorTotalVentasDiciembre) {
-                mayorTotalVentasDiciembre = totalVentasDiciembre;
+        // Buscar al vendedor número 5
+        Vendedor vendedor5 = null;
+        for (Vendedor v : vendedores) {
+            if (v.getNumeroVendedor() == 5) {
+                vendedor5 = v;
+                break;
             }
         }
 
+        // Verificar si se encontró al vendedor 5
+        if (vendedor5 == null) {
+            System.out.println("No se encontró al vendedor 5.");
+            return;
+        }
+
+        // Calcular el total de ventas en octubre de 2024
+        long totalVentasOctubre2024 = 0;
+        for (int i = 0; i < 50; i++) {
+            Venta venta = vendedor5.getVenta(i);
+            if (venta != null) { // Verificar si la venta existe
+                // Filtrar ventas de octubre de 2024
+                if (venta.getFechaVenta().getMonth() == Month.OCTOBER &&
+                    venta.getFechaVenta().getYear() == 2024) {
+                    totalVentasOctubre2024 += venta.getValorVenta();
+                }
+            }
+        }
+
+        // Calcular las comisiones (supongamos una comisión del 10%)
+        double comision = totalVentasOctubre2024 * 0.10;
+
+        // Redondear el valor de la comisión
+        long comisionRedondeada = Math.round(comision);
+
         // Mostrar el resultado
-        System.out.println("El vendedor con el mayor total de ventas en diciembre vendió un total de: " + mayorTotalVentasDiciembre);
+        System.out.println("El valor de las comisiones recibidas por el vendedor número 5 en octubre de 2024 fue: " + comisionRedondeada);
     }
 }
