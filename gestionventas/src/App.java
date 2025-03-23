@@ -7,24 +7,33 @@ public class App {
         // Obtener todos los vendedores
         Vendedor[] vendedores = ParseDatos.parseDatos();
 
-        // Variable para almacenar el total de ventas en 2024 (usamos long para evitar desbordamiento)
-        long totalVentas2024 = 0;
+        // Variables para almacenar el vendedor con mayor total de ventas en 2025
+        int numeroVendedorConMayorVentas = -1;
+        long mayorTotalVentas = 0;
 
         // Recorrer todos los vendedores
         for (Vendedor vendedor : vendedores) {
+            long totalVentas2025 = 0;
+
             // Recorrer las ventas del vendedor (hasta 50 ventas)
             for (int i = 0; i < 50; i++) {
                 Venta venta = vendedor.getVenta(i);
                 if (venta != null) { // Verificar si la venta existe
-                    // Filtrar ventas del año 2024
-                    if (venta.getFechaVenta().getYear() == 2024) {
-                        totalVentas2024 += venta.getValorVenta();
+                    // Filtrar ventas del año 2025
+                    if (venta.getFechaVenta().getYear() == 2025) {
+                        totalVentas2025 += venta.getValorVenta();
                     }
                 }
+            }
+
+            // Verificar si este vendedor tiene el mayor total de ventas en 2025
+            if (totalVentas2025 > mayorTotalVentas) {
+                mayorTotalVentas = totalVentas2025;
+                numeroVendedorConMayorVentas = vendedor.getNumeroVendedor();
             }
         }
 
         // Mostrar el resultado
-        System.out.println("El total de ventas de todos los vendedores en 2024 es: " + totalVentas2024);
+        System.out.println("El vendedor con el mayor total en ventas en 2025 es aquel cuyo número de vendedor es: " + numeroVendedorConMayorVentas);
     }
 }
